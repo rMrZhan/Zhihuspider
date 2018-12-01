@@ -9,3 +9,5 @@ spring:
 #mybatis
 mybatis:
   type-aliases-package: com.zhihuspider.zhihuspider.model
+logging:
+  level: info
