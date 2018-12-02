@@ -21,19 +21,20 @@ public class Answer {
     }
     @Test
     public void get() throws IOException {
-        HttpGet request = new HttpGet("https://www.zhihu.com/api/v4/questions/24394776/answers?include=content,voteup_count&limit=200&offset=0&sort_by=default");
+        HttpGet request = new HttpGet("https://www.zhihu.com/api/v4/questions/24394776/answers?include=content,voteup_count&limit=268&offset=0&sort_by=default");
         request.setHeader("User-Agent",
                 "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/70.0.3538.110 Safari/537.36");
         String res = this.httpClient.execute(request, new BasicResponseHandler());
-        String regex = "\"author\":.\"id\":\"(.*?)\",(.*?)name\":(.*?)\",(.*?)updated_time\":(.*?)\",(.*?)voteup_count\":(.*?),\"content\":(.*?)\",";
+        String regex = "\"author\":(.*?)\"url_token\":\"(.*?)\",(.*?)name\":\"(.*?)\",(.*?)updated_time\":(.*?),(.*?)voteup_count\":(.*?),\"content\":(.*?)\",";
         Pattern p =Pattern.compile(regex);
         Matcher m = p.matcher(res);
+
         while (m.find()){
-            System.out.println("作者id:"+m.group(1));
-            System.out.println("名称:"+m.group(3));
-            System.out.println("updated_time:"+m.group(5));
-            System.out.println("voteup_count:"+m.group(7));
-            System.out.println("content:"+m.group(8));
+            System.out.println("url_token:"+m.group(2));
+            System.out.println("名称:"+m.group(4));
+            System.out.println("updated_time:"+m.group(6));
+            System.out.println("voteup_count:"+m.group(8));
+            System.out.println("content:"+m.group(9));
         }
     }
 
