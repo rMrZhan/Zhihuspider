@@ -7,13 +7,12 @@ import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpUriRequest;
 import org.apache.http.client.methods.RequestBuilder;
 import org.apache.http.client.utils.URIBuilder;
+import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.message.BasicHeader;
 import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.util.EntityUtils;
 import org.assertj.core.util.Lists;
-
-import javax.sound.midi.Soundbank;
 import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -22,9 +21,13 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class Topic {
-
-    public static void getTopic(String url,String limit) throws URISyntaxException, IOException {
-        HttpGet httpGet = new HttpGet();
+    CloseableHttpClient httpClient;
+    public void init() {
+        httpClient = HttpClients.createDefault();
+    }
+    public void getTopic(String url, String limit) throws URISyntaxException, IOException {
+        this.init();
+        HttpGet request = new HttpGet(url);
         //构造路径参数
         List<NameValuePair> nameValuePairList = Lists.newArrayList();
         nameValuePairList.add(new BasicNameValuePair("t","general"));
@@ -56,9 +59,9 @@ public class Topic {
         while(m.find()){
             String id = m.group(3).replaceAll("\\s|\"|,","");
             System.out.println("id: "+id);
-            System.out.println(id);
             System.out.println("标题："+m.group(4));
             new TopicCount().getCount(id);
+            new Answer().getAnswer(id);
         }
         //关闭HttpEntity流
         EntityUtils.consume(entity);
