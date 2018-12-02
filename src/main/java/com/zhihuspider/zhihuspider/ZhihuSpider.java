@@ -4,7 +4,7 @@ import java.io.IOException;
 import java.net.URISyntaxException;
 public class ZhihuSpider {
     final private static String url = "https://www.zhihu.com/api/v4/search_v3";    //请求路径
-    final private static String limit = "100";    //话题个数
+    final private static String limit = "15";    //话题个数
     public static void main(String[] args) {
         try {
             new Topic().getTopic(url,limit);

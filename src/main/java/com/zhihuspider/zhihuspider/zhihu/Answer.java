@@ -23,13 +23,17 @@ public class Answer {
         String regex = "\"author\":(.*?)\"url_token\":\"(.*?)\",(.*?)name\":\"(.*?)\",(.*?)updated_time\":(.*?),(.*?)voteup_count\":(.*?),\"content\":(.*?)\",";
         Pattern p =Pattern.compile(regex);
         Matcher m = p.matcher(res);
-        while (m.find()){
-            System.out.println("url_token:"+m.group(2));
-            System.out.println("名称:"+m.group(4));
-            System.out.println("updated_time:"+m.group(6));
-            System.out.println("voteup_count:"+m.group(8));
-            System.out.println("content:"+m.group(9));
-            new People().getInfo(m.group(2));
+        while (m.find()) {
+            System.out.println("url_token:" + m.group(2));
+            System.out.println("名称:" + m.group(4));
+            System.out.println("updated_time:" + m.group(6));
+            System.out.println("voteup_count:" + m.group(8));
+            System.out.println("content:" + m.group(9));
+            if (m.group(2).length() > 1) {
+                new People().getInfo(m.group(2));
+            }else {
+                System.out.println("该用户为匿名用户");
+            }
         }
     }
 }
